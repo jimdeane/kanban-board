@@ -1,3 +1,4 @@
+import Column from "../view/Column.js";
 export default class KanbanAPI {
 	static getItems(columnId) {
 		const column = read().find(column => column.id == columnId);
@@ -9,6 +10,39 @@ export default class KanbanAPI {
 		return column.items;
 	}
 
+	static addColumn() {
+		const data = read();
+		const panel = document.getElementById("kanban-panel");
+		// Select all divs with the class 'kanban__column'
+		const kanbanColumns = document.querySelectorAll('.kanban__column');
+
+		// Loop through each column and extract its data-id value
+		const pos = kanbanColumns.length;
+		const title = 'new column';
+		const columnView = new Column(pos, title);
+		data.push({id: pos, items: []});
+		panel.appendChild(columnView.elements.root);
+		console.log(panel);
+		save(data);
+	}
+	static deleteCol(event) {
+		const data = read();
+		// Get the element that triggered the event
+		const clickedElement = event.target;
+
+		// Traverse to the parent element (the div with class 'kanban__column')
+		const parentDiv = clickedElement.closest('.kanban__column');
+
+		// Retrieve the data-id attribute from the parent div
+		const dataId = parentDiv ? parentDiv.getAttribute('data-id') : null;
+
+		// Log or use the data-id
+		console.log(dataId);  // Outputs: "3"
+
+		data.splice(dataId-1, 1);
+		data.save();
+		console.log(data);
+	}
 	static insertItem(columnId, content) {
 		const data = read();
 		const column = data.find(column => column.id == columnId);

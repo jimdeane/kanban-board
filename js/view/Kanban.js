@@ -10,7 +10,7 @@ export default class Kanban {
 			this.root.appendChild(columnView.elements.root);
 		});
 	}
-
+	
 	static columns() {
 		return [
 			{

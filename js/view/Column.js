@@ -34,7 +34,9 @@ export default class Column {
 
 		return range.createContextualFragment(`
 			<div class="kanban__column">
+				
 				<div class="kanban__column-title"></div>
+				<button class='delete-col' onclick='deleteCol(event)'>delete</button>
 				<div class="kanban__column-items"></div>
 				<button class="kanban__add-item" type="button">+ Add</button>
 			</div>
